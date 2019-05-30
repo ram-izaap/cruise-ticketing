@@ -1,0 +1,62 @@
+<div class="animated fadeIn">
+  <div class="row">
+<!--/.col-->
+<div class="col-sm-6">
+  <div class="card">
+      <div class="card-header">
+          <strong>Cruise Booking</strong>
+          <small>Form</small>
+        </div>
+    <form [formGroup]="bookingForm">
+
+    <div class="card-body row">
+      <div class="form-group col-md-4">
+        <label for="date">Date</label>
+        <input formControlName="date" class="form-control" id="date-input" type="date"  placeholder="date">
+        <span class="help-block text-danger" *ngIf="bookingForm.controls.date.errors?.required && ( bookingForm.controls.date.dirty || bookingForm.controls.date.touched )">Please enter a valid date</span>
+      </div>
+            <div class="form-group col-md-4">
+              <label for="cruise">Cruise</label>
+              <select formControlName="cruise" class="form-control" id="cruise">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+              <span class="help-block text-danger" *ngIf="bookingForm.controls.cruise.errors?.required && ( bookingForm.controls.cruise.dirty || bookingForm.controls.cruise.touched )">Please select a cruise</span>
+            </div>
+      <div class="form-group col-md-4">
+        <label for="seats">Seats</label>
+        <input formControlName="seats" type="text" class="form-control" id="seats" placeholder="Enter No of Seats">
+        <span class="help-block text-danger" *ngIf="bookingForm.controls.seats.errors?.required && ( bookingForm.controls.seats.dirty || bookingForm.controls.seats.touched )">Please enter a valid seats</span>
+        <span class="help-block text-danger" *ngIf="bookingForm.controls.seats.errors?.max && ( bookingForm.controls.seats.dirty || bookingForm.controls.seats.touched )">max of 10 seats are allowed</span>
+      </div>
+        <div class="form-group col-sm-4">
+          <label for="city">Contact Number</label>
+          <input formControlName="contact" type="text" class="form-control" id="contact" placeholder="Enter contact number">
+          <span class="help-block text-danger" *ngIf="bookingForm.controls.contact.errors?.required && ( bookingForm.controls.contact.dirty || bookingForm.controls.contact.touched )">Please enter a valid contact</span>
+          <span class="help-block text-danger" *ngIf="bookingForm.controls.contact.errors?.maxlength && ( bookingForm.controls.contact.dirty || bookingForm.controls.contact.touched )">Please enter only 10 Digits</span>
+        </div>
+        <div class="form-group col-sm-8">
+          <label for="payment">Payment Method</label>
+          <select formControlName="payment" class="form-control" id="payment">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+          </select>
+          <span class="help-block text-danger" *ngIf="bookingForm.controls.payment.errors?.required && ( bookingForm.controls.payment.dirty || bookingForm.controls.payment.touched )">Please select a payment</span>
+        </div>
+      <div class="form-group col-sm-12">
+        <label for="country">Remarks</label>
+        <textarea formControlName="remarks" class="form-control"  placeholder="Enter Your Remarks here.." id="" cols="10" rows="5"></textarea>
+      </div>
+    </div>
+    <div class="card-footer">
+        <button type="button" class="btn btn-sm btn-primary" (click)="formCheck()" ><i class="fa fa-dot-circle-o"></i> Submit</button>
+        <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+      </div>
+    </form>
+  </div>
+</div><!--/.col-->
+
+</div>
+</div>

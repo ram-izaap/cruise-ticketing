@@ -83,6 +83,10 @@ export const routes: Routes = [
       {
         path: 'widgets',
         loadChildren: './views/widgets/widgets.module#WidgetsModule'
+      },
+      {
+        path:'ticket-booking',
+        loadChildren:'./views/ticket-booking/ticket-booking.module#TicketBookingModule'
       }
     ]
   },

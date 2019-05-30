@@ -147,6 +147,11 @@ export const navItems: NavData[] = [
     icon: 'icon-pie-chart'
   },
   {
+    name: 'Ticket-Booking',
+    url: '/ticket-booking',
+    icon: 'icon-calendar'
+  },
+  {
     name: 'Icons',
     url: '/icons',
     icon: 'icon-star',
