@@ -18,6 +18,8 @@ import { IconsComponent } from './icons/icons.component';
 import { MapsComponent } from './maps/maps.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { UpgradeComponent } from './upgrade/upgrade.component';
+import { TicketBookingComponent } from './ticket-booking/ticket-booking.component';
+
 import {
   AgmCoreModule
 } from '@agm/core';
@@ -41,8 +43,7 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   declarations: [
     AppComponent,
-    AdminLayoutComponent
-
+    AdminLayoutComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

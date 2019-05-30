@@ -33,9 +33,9 @@ export class LoginComponent implements OnInit {
    */
   public login() {
 
-    console.log(this.loginForm.value);
-    // this.authService.setLoginStatus(true);
-    // this.route.navigate(['dashboard']);
+    //console.log(this.loginForm.value);
+     this.authService.setLoginStatus(true);
+     this.route.navigate(['dashboard']);
   }
 }
 

@@ -20,6 +20,7 @@ import {
   MatTooltipModule,
   MatSelectModule
 } from '@angular/material';
+import { TicketBookingComponent } from 'app/ticket-booking/ticket-booking.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -41,6 +42,7 @@ import {
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
+    TicketBookingComponent
   ]
 })
 
