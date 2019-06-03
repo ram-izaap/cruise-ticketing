@@ -50,6 +50,44 @@
         <textarea formControlName="remarks" class="form-control"  placeholder="Enter Your Remarks here.." id="" cols="10" rows="5"></textarea>
       </div>
     </div>
+    
+    <div class="container">
+      <h5 class="text-center text-info">Traveller Details</h5>
+    </div>
+    <table class="table">
+      <thead>
+          <tr>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Action</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let field of fieldArray; let i = index">
+              <td>
+                  <input  class="form-control" type="text" />
+              </td>
+              <td>
+                  <input  class="form-control" type="text" />
+              </td>
+              <td>
+                  <button class="btn btn-danger"  type="button" (click)="deleteFieldValue(i)">Delete</button>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <input class="form-control" type="text" />
+              </td>
+              <td>
+                  <input class="form-control" type="text" />
+              </td>
+              <td>
+                  <button class="btn btn-success" type="button" (click)="addFieldValue()">Add</button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+
     <div class="card-footer">
         <button type="button" class="btn btn-sm btn-primary" (click)="formCheck()" ><i class="fa fa-dot-circle-o"></i> Submit</button>
         <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>

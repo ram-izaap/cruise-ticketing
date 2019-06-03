@@ -10,6 +10,10 @@ export class TicketBookingComponent implements OnInit {
 
   public bookingForm: FormGroup;
 
+  private fieldArray: Array<any> = [];
+  private newAttribute: any = {};
+
+
   constructor() {
     this.bookingForm = new FormGroup({
       date: new FormControl('', Validators.compose([Validators.required])),
@@ -23,6 +27,17 @@ export class TicketBookingComponent implements OnInit {
 
   ngOnInit() { 
   }
+
+
+  addFieldValue() {
+      this.fieldArray.push(this.newAttribute)
+      this.newAttribute = {};
+  }
+
+  deleteFieldValue(index) {
+      this.fieldArray.splice(index, 1);
+  }
+
   
   public formCheck(){
     console.log(this.bookingForm.value);
