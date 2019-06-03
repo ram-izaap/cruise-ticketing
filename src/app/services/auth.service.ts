@@ -34,12 +34,12 @@ export class AuthService {
    * login
    */
   public login(params) {
-    // let url = 'http://127.0.0.1:8000/api/login/' + params.email;
-    // return this
-    //   .http
-    //   .get(url);
+    let url = 'http://127.0.0.1:8000/api/login/' + params.email + '/' + params.password;
+    return this
+      .http
+      .get(url);
 
-    return of(true);
+    // return of(true);
 
   }
 }
