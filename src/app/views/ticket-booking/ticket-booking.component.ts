@@ -9,8 +9,9 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 export class TicketBookingComponent implements OnInit {
 
   public bookingForm: FormGroup;
-
-  private fieldArray: Array<any> = [];
+  public memberForms: Array<FormGroup>;
+  public seats: number = 0;
+  public fieldArray: Array<any> = [];
   private newAttribute: any = {};
 
 
@@ -22,10 +23,52 @@ export class TicketBookingComponent implements OnInit {
       contact: new FormControl('', Validators.compose([Validators.required,Validators.maxLength(10)])),
       payment: new FormControl('', Validators.compose([Validators.required])),
       remarks: new FormControl(''),
+      /*name1: new FormControl('', Validators.compose([Validators.required])),
+      age1: new FormControl('', Validators.compose([Validators.required])),*/
+      /*one: new FormGroup(
+        {
+          name: new FormControl('', Validators.compose([Validators.required])),
+          age: new FormControl('', Validators.compose([Validators.required])),
+        }
+      ),
+      two: new FormGroup(
+        {
+          name: new FormControl('', Validators.compose([Validators.required])),
+          age: new FormControl('', Validators.compose([Validators.required])),
+        }
+      )*/
     });
   }
 
   ngOnInit() { 
+    this.bookingForm.valueChanges.subscribe((form: any) => {
+      
+    })
+  }
+
+  /**
+   * add
+   */
+  public add() {
+    let seats = this.bookingForm.value.seats;
+      if (Number(seats)) {
+        this.seats = seats;
+        this.fieldArray = [];
+        // this.bookingForm.
+        for (let i = 0; i < seats; i++) {
+          this.fieldArray.push(i); 
+
+          // let memberForm = new FormGroup({
+          //   name: new FormControl('', Validators.compose([Validators.required])),
+          //   age: new FormControl('', Validators.compose([Validators.required]))
+          // });
+
+          this.bookingForm.addControl('name'+i, new FormControl('', Validators.compose([Validators.required])));
+          this.bookingForm.addControl('age'+i, new FormControl('', Validators.compose([Validators.required])));
+          // this.memberForms.push(memberForm);         
+        }
+        console.log(seats)
+      }
   }
 
 

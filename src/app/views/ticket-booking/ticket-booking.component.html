@@ -54,39 +54,20 @@
     <div class="container">
       <h5 class="text-center text-info">Traveller Details</h5>
     </div>
-    <table class="table">
-      <thead>
-          <tr>
-              <th>Name</th>
-              <th>Age</th>
-              <th>Action</th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr *ngFor="let field of fieldArray; let i = index">
-              <td>
-                  <input  class="form-control" type="text" />
-              </td>
-              <td>
-                  <input  class="form-control" type="text" />
-              </td>
-              <td>
-                  <button class="btn btn-danger"  type="button" (click)="deleteFieldValue(i)">Delete</button>
-              </td>
-          </tr>
-          <tr>
-              <td>
-                  <input class="form-control" type="text" />
-              </td>
-              <td>
-                  <input class="form-control" type="text" />
-              </td>
-              <td>
-                  <button class="btn btn-success" type="button" (click)="addFieldValue()">Add</button>
-              </td>
-          </tr>
-      </tbody>
-  </table>
+
+    <div class="row">
+      <div class="col-md-6">Name</div>
+      <div class="col-md-6">Age</div>
+      <ng-container *ngFor="let i of fieldArray">
+        <div class="col-md-6">
+          <input [formControlName]="'name' +i">
+          <span class="help-block text-danger" *ngIf="bookingForm.controls['name'+i].errors?.required && ( bookingForm.controls['name'+i].dirty || bookingForm.controls['name'+i].touched )">Please enter a valid seats</span>
+        </div>
+        <div class="col-md-6"><input [formControlName]="'age'+i"></div>
+      </ng-container>
+      
+    </div>
+    
 
     <div class="card-footer">
         <button type="button" class="btn btn-sm btn-primary" (click)="formCheck()" ><i class="fa fa-dot-circle-o"></i> Submit</button>
@@ -95,6 +76,6 @@
     </form>
   </div>
 </div><!--/.col-->
-
+<button type="button" (click)="add()">GGGG</button>
 </div>
 </div>
