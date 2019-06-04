@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormControl, FormBuilder, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-ticket-booking',
@@ -10,34 +10,42 @@ export class TicketBookingComponent implements OnInit {
 
   public bookingForm: FormGroup;
   public memberForms: Array<FormGroup>;
+  public members: FormArray;
   public seats: number = 0;
   public fieldArray: Array<any> = [];
   private newAttribute: any = {};
 
 
-  constructor() {
-    this.bookingForm = new FormGroup({
+  constructor(private fb: FormBuilder) {
+
+    this.bookingForm = this.fb.group({
       date: new FormControl('', Validators.compose([Validators.required])),
       seats: new FormControl('', Validators.compose([Validators.required,Validators.max(10)])),
       cruise: new FormControl('', Validators.compose([Validators.required])),
       contact: new FormControl('', Validators.compose([Validators.required,Validators.maxLength(10)])),
       payment: new FormControl('', Validators.compose([Validators.required])),
       remarks: new FormControl(''),
-      /*name1: new FormControl('', Validators.compose([Validators.required])),
-      age1: new FormControl('', Validators.compose([Validators.required])),*/
-      /*one: new FormGroup(
-        {
-          name: new FormControl('', Validators.compose([Validators.required])),
-          age: new FormControl('', Validators.compose([Validators.required])),
-        }
-      ),
-      two: new FormGroup(
-        {
-          name: new FormControl('', Validators.compose([Validators.required])),
-          age: new FormControl('', Validators.compose([Validators.required])),
-        }
-      )*/
+      members: this.fb.array([this.createMember()])
     });
+  }
+
+  
+
+  createMember(): FormGroup {
+    return this.fb.group({
+      name: new FormControl('', Validators.compose([Validators.required])),
+      age: new FormControl('', Validators.compose([Validators.required]))
+    });
+  }
+
+  addMember(): void {
+    this.members = this.bookingForm.get('members') as FormArray;
+    this.members.push(this.createMember());
+  }
+
+  removeMember(i: number): void {
+    this.members = this.bookingForm.get('members') as FormArray;
+    this.members.removeAt(i);
   }
 
   ngOnInit() { 
@@ -49,26 +57,30 @@ export class TicketBookingComponent implements OnInit {
   /**
    * add
    */
-  public add() {
-    let seats = this.bookingForm.value.seats;
-      if (Number(seats)) {
-        this.seats = seats;
-        this.fieldArray = [];
-        // this.bookingForm.
-        for (let i = 0; i < seats; i++) {
-          this.fieldArray.push(i); 
+  public add(event) {
+    
+    
+    let seats = event.target.value;
+    if (!Number(seats)) return;
 
-          // let memberForm = new FormGroup({
-          //   name: new FormControl('', Validators.compose([Validators.required])),
-          //   age: new FormControl('', Validators.compose([Validators.required]))
-          // });
+    let populatedCount= this.bookingForm.value.members.length;
+    seats = Number(seats);
 
-          this.bookingForm.addControl('name'+i, new FormControl('', Validators.compose([Validators.required])));
-          this.bookingForm.addControl('age'+i, new FormControl('', Validators.compose([Validators.required])));
-          // this.memberForms.push(memberForm);         
-        }
-        console.log(seats)
+    console.log('Add', seats, populatedCount, seats > populatedCount);
+
+    if (seats > populatedCount) {
+      let lcount = seats - populatedCount;
+      for (let i = 0; i < lcount; i++) {
+        this.addMember();
       }
+    } else {
+      let lcount = populatedCount - seats;
+      console.log('removeMember::shjasd', lcount);
+      for (let i = populatedCount-1; i > lcount; i--) {
+        console.log('removeMember', i);
+        this.removeMember(i);
+      }
+    }
   }
 
 
@@ -83,7 +95,7 @@ export class TicketBookingComponent implements OnInit {
 
   
   public formCheck(){
-    console.log(this.bookingForm.value);
+    console.log(this.bookingForm);
   }
 
 }

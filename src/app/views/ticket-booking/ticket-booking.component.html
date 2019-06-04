@@ -26,7 +26,7 @@
             </div>
       <div class="form-group col-md-4">
         <label for="seats">Seats</label>
-        <input formControlName="seats" type="text" class="form-control" id="seats" placeholder="Enter No of Seats">
+        <input formControlName="seats" type="text" class="form-control" id="seats" placeholder="Enter No of Seats" (blur)="add($event)">
         <span class="help-block text-danger" *ngIf="bookingForm.controls.seats.errors?.required && ( bookingForm.controls.seats.dirty || bookingForm.controls.seats.touched )">Please enter a valid seats</span>
         <span class="help-block text-danger" *ngIf="bookingForm.controls.seats.errors?.max && ( bookingForm.controls.seats.dirty || bookingForm.controls.seats.touched )">max of 10 seats are allowed</span>
       </div>
@@ -55,18 +55,20 @@
       <h5 class="text-center text-info">Traveller Details</h5>
     </div>
 
-    <div class="row">
-      <div class="col-md-6">Name</div>
-      <div class="col-md-6">Age</div>
-      <ng-container *ngFor="let i of fieldArray">
-        <div class="col-md-6">
-          <input [formControlName]="'name' +i">
-          <span class="help-block text-danger" *ngIf="bookingForm.controls['name'+i].errors?.required && ( bookingForm.controls['name'+i].dirty || bookingForm.controls['name'+i].touched )">Please enter a valid seats</span>
-        </div>
-        <div class="col-md-6"><input [formControlName]="'age'+i"></div>
-      </ng-container>
-      
-    </div>
+    <div formArrayName="members"
+  *ngFor="let item of bookingForm.get('members').controls; let i = index;">
+    <div [formGroupName]="i" class="row">
+      <div class="col-md-6">
+          <input class="form-control" formControlName="name" placeholder="Item name">
+          <span class="help-block text-danger" *ngIf="bookingForm.controls.members.controls[i].controls.name.errors?.required && ( bookingForm.controls.members.controls[i].controls.name.dirty || bookingForm.controls.members.controls[i].controls.name.touched )">Please enter a valid name</span>
+      </div>
+      <div class="col-md-6">
+          <input  class="form-control" formControlName="age" placeholder="Item age">
+          <span class="help-block text-danger" *ngIf="bookingForm.controls.members.controls[i].controls.age.errors?.required && ( bookingForm.controls.members.controls[i].controls.age.dirty || bookingForm.controls.members.controls[i].controls.age.touched )">Please enter a valid age</span>
+      </div>
+    </div>  
+  </div>
+
     
 
     <div class="card-footer">
