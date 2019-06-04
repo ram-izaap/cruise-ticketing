@@ -1,7 +1,7 @@
 <div class="animated fadeIn">
   <div class="row">
 <!--/.col-->
-<div class="col-sm-6">
+<div class="col-sm-8">
   <div class="card">
       <div class="card-header">
           <strong>Cruise Booking</strong>
@@ -18,9 +18,10 @@
             <div class="form-group col-md-4">
               <label for="cruise">Cruise</label>
               <select formControlName="cruise" class="form-control" id="cruise">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
+                <option value="">Select Cruise</option>
+                <option value="sunset">Sunset Cruise</option>
+                <option value="evening">Evening Cruise</option>
+                <option value="dinner">Dinner Cruise</option>
               </select>
               <span class="help-block text-danger" *ngIf="bookingForm.controls.cruise.errors?.required && ( bookingForm.controls.cruise.dirty || bookingForm.controls.cruise.touched )">Please select a cruise</span>
             </div>
@@ -39,9 +40,10 @@
         <div class="form-group col-sm-8">
           <label for="payment">Payment Method</label>
           <select formControlName="payment" class="form-control" id="payment">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
+              <option value="">Choose Payment</option>
+              <option value="cash">Cash</option>
+              <option value="card">Credit/Debit Card</option>
+              <option value="online">NetBanking/UPI</option>
           </select>
           <span class="help-block text-danger" *ngIf="bookingForm.controls.payment.errors?.required && ( bookingForm.controls.payment.dirty || bookingForm.controls.payment.touched )">Please select a payment</span>
         </div>
@@ -53,17 +55,18 @@
     
     <div class="container">
       <h5 class="text-center text-info">Traveller Details</h5>
+      <hr>
     </div>
 
-    <div formArrayName="members"
+    <div class="container" formArrayName="members"
   *ngFor="let item of bookingForm.get('members').controls; let i = index;">
-    <div [formGroupName]="i" class="row">
+    <div [formGroupName]="i" class="form-group row">
       <div class="col-md-6">
-          <input class="form-control" formControlName="name" placeholder="Item name">
+          <input class="form-control" formControlName="name" placeholder="Traveller  name">
           <span class="help-block text-danger" *ngIf="bookingForm.controls.members.controls[i].controls.name.errors?.required && ( bookingForm.controls.members.controls[i].controls.name.dirty || bookingForm.controls.members.controls[i].controls.name.touched )">Please enter a valid name</span>
       </div>
       <div class="col-md-6">
-          <input  class="form-control" formControlName="age" placeholder="Item age">
+          <input  class="form-control" formControlName="age" placeholder="Traveller  age">
           <span class="help-block text-danger" *ngIf="bookingForm.controls.members.controls[i].controls.age.errors?.required && ( bookingForm.controls.members.controls[i].controls.age.dirty || bookingForm.controls.members.controls[i].controls.age.touched )">Please enter a valid age</span>
       </div>
     </div>  
