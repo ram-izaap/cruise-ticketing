@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormControl, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, Validators, FormControl, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
+import { BookingService } from '../../services/booking.service';
 
 @Component({
   selector: 'app-ticket-booking',
@@ -15,12 +16,14 @@ export class TicketBookingComponent implements OnInit {
   public fieldArray: Array<any> = [];
   private newAttribute: any = {};
 
-
-  constructor(private fb: FormBuilder) {
+  public availableSeats = 0;
+  public flag = true;
+  constructor(private fb: FormBuilder, private bookingService: BookingService) {
 
     this.bookingForm = this.fb.group({
+      availableSeats: new FormControl(this.availableSeats),
       date: new FormControl('', Validators.compose([Validators.required])),
-      seats: new FormControl('', Validators.compose([Validators.required,Validators.max(10)])),
+      seats: new FormControl('', Validators.compose([Validators.required,Validators.max(10), ValidateSeats])),
       cruise: new FormControl('', Validators.compose([Validators.required])),
       contact: new FormControl('', Validators.compose([Validators.required,Validators.maxLength(10)])),
       payment: new FormControl('', Validators.compose([Validators.required])),
@@ -74,12 +77,9 @@ export class TicketBookingComponent implements OnInit {
         this.addMember();
       }
     } else {
-      let lcount = populatedCount - seats;
-      console.log('removeMember::shjasd', lcount);
-      for (let i = populatedCount-1; i > lcount; i--) {
-        console.log('removeMember', i);
+      for (let i = populatedCount-1; i >= seats; i--) {
         this.removeMember(i);
-      }
+      }      
     }
   }
 
@@ -96,6 +96,32 @@ export class TicketBookingComponent implements OnInit {
   
   public formCheck(){
     console.log(this.bookingForm);
+    this.bookingService
+      .createBooking(this.bookingForm.value)
+      .subscribe((resp) => {
+        console.log(resp);
+      })
   }
 
+  /**
+   * getAvailableSeats
+   */
+  public getAvailableSeats(e) {
+    console.log(this.bookingForm.value.date);
+    this.availableSeats = this.bookingService.getAvailableSeats(this.bookingForm.value.date);
+    this.bookingForm.get('availableSeats').setValue(this.availableSeats);
+  }
+
+}
+
+export function ValidateSeats(control: AbstractControl) {
+  if (control && control.parent) {
+    console.log('JJJJ', Number(control.value), control.parent.value.availableSeats, Number(control.value) <= control.parent.value.availableSeats)
+  }
+  
+  if (Number(control.value) && Number(control.value) >= control.parent.value.availableSeats) {
+    console.log('kkkk', control.parent.value.availableSeats)
+    return { validSeats: true };
+  }
+  return null;
 }

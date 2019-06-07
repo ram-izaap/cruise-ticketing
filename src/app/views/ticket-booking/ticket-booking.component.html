@@ -6,13 +6,14 @@
       <div class="card-header">
           <strong>Cruise Booking</strong>
           <small>Form</small>
+          <small>{{availableSeats}}</small>
         </div>
     <form [formGroup]="bookingForm">
-
+      <input formControlName="availableSeats" />
     <div class="card-body row">
       <div class="form-group col-md-4">
         <label for="date">Date</label>
-        <input formControlName="date" class="form-control" id="date-input" type="date"  placeholder="date">
+        <input formControlName="date" class="form-control" id="date-input" type="date"  placeholder="date" (change)="getAvailableSeats($event)">
         <span class="help-block text-danger" *ngIf="bookingForm.controls.date.errors?.required && ( bookingForm.controls.date.dirty || bookingForm.controls.date.touched )">Please enter a valid date</span>
       </div>
             <div class="form-group col-md-4">
@@ -27,9 +28,10 @@
             </div>
       <div class="form-group col-md-4">
         <label for="seats">Seats</label>
-        <input formControlName="seats" type="text" class="form-control" id="seats" placeholder="Enter No of Seats" (blur)="add($event)">
+        <input [attr.disabled]="availableSeats ? null : ''" formControlName="seats" type="text" class="form-control" id="seats" placeholder="Enter No of Seats" (blur)="add($event)">
         <span class="help-block text-danger" *ngIf="bookingForm.controls.seats.errors?.required && ( bookingForm.controls.seats.dirty || bookingForm.controls.seats.touched )">Please enter a valid seats</span>
         <span class="help-block text-danger" *ngIf="bookingForm.controls.seats.errors?.max && ( bookingForm.controls.seats.dirty || bookingForm.controls.seats.touched )">max of 10 seats are allowed</span>
+        <span class="help-block text-danger" *ngIf="bookingForm.controls.seats.errors?.validSeats && ( bookingForm.controls.seats.dirty || bookingForm.controls.seats.touched )">Please enter valid seat count (less than availablity).</span>
       </div>
         <div class="form-group col-sm-4">
           <label for="city">Contact Number</label>
@@ -75,7 +77,7 @@
     
 
     <div class="card-footer">
-        <button type="button" class="btn btn-sm btn-primary" (click)="formCheck()" ><i class="fa fa-dot-circle-o"></i> Submit</button>
+        <button [disabled]="availableSeats<=0" type="button" class="btn btn-sm btn-primary" (click)="formCheck()" ><i class="fa fa-dot-circle-o"></i> Submit</button>
         <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
       </div>
     </form>
