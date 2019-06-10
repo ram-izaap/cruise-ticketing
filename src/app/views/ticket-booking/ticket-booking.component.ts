@@ -18,10 +18,12 @@ export class TicketBookingComponent implements OnInit {
 
   public availableSeats = 0;
   public flag = true;
+  public pnrNo = Math.floor(Math.random() * 10000) + 1;
   constructor(private fb: FormBuilder, private bookingService: BookingService) {
 
     this.bookingForm = this.fb.group({
       availableSeats: new FormControl(this.availableSeats),
+      pnr: new FormControl(this.pnrNo, Validators.compose([Validators.required])),
       date: new FormControl('', Validators.compose([Validators.required])),
       seats: new FormControl('', Validators.compose([Validators.required,Validators.max(10), ValidateSeats])),
       cruise: new FormControl('', Validators.compose([Validators.required])),

@@ -9,7 +9,8 @@
           <small>{{availableSeats}}</small>
         </div>
     <form [formGroup]="bookingForm">
-      <input formControlName="availableSeats" />
+      <input type="hidden" formControlName="availableSeats" />
+      <input type="hidden" formControlName="pnr" />
     <div class="card-body row">
       <div class="form-group col-md-4">
         <label for="date">Date</label>

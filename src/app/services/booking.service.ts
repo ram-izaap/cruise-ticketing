@@ -27,6 +27,6 @@ export class BookingService {
     console.log(data);
     return this
       .http
-      .post('', data);      
+      .post('http://127.0.0.1:8000/api/ticket', data);      
   }
 }
